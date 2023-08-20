@@ -1,14 +1,21 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import styles from "./SidebarNavigation.module.css";
 
 const SidebarNavigation = () => {
+  const navigate = useNavigate();
   const [activeButtonIndex, setActiveButtonIndex] = useState(-1);
 
   const handleButtonClick = (index) => {
     if (activeButtonIndex === index) {
-      return; // Ничего не делаем, если нажали на уже активную кнопку
+      return;
     }
+
     setActiveButtonIndex(index);
+
+    if (index === 2) { // Проверяем, если нажата кнопка "Portfolio"
+      navigate("/profile-page"); // Перенаправляем на указанный маршрут
+    }
   };
 
   const mainButtons = [
@@ -23,9 +30,8 @@ const SidebarNavigation = () => {
       {mainButtons.map((button, index) => (
         <div
           key={index}
-          className={`${styles.wrapForElement} ${
-            activeButtonIndex === index ? styles.clicked : ""
-          }`}
+          className={`${styles.wrapForElement} ${activeButtonIndex === index ? styles.clicked : ""
+            }`}
         >
           <button
             className={`${styles.button} ${button.style}`}
@@ -38,5 +44,7 @@ const SidebarNavigation = () => {
     </div>
   );
 };
+
+
 
 export default SidebarNavigation;
